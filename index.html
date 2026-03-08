@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Computer Vision Cheat Sheet</title>
+
+<style>
+
+body{
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+margin:0;
+background:#0f172a;
+color:#e2e8f0;
+}
+
+header{
+text-align:center;
+padding:60px 20px;
+background:linear-gradient(135deg,#1e293b,#0f172a);
+}
+
+header h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+header p{
+color:#94a3b8;
+font-size:18px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.section-title{
+font-size:28px;
+margin-bottom:20px;
+border-left:5px solid #38bdf8;
+padding-left:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+box-shadow:0 6px 20px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h3{
+margin-top:0;
+color:#38bdf8;
+}
+
+.card p{
+font-size:14px;
+color:#cbd5f5;
+}
+
+.code{
+background:#020617;
+padding:10px;
+border-radius:6px;
+font-family:monospace;
+font-size:13px;
+margin-top:10px;
+color:#38bdf8;
+}
+
+.pipeline{
+margin-top:40px;
+padding:30px;
+background:#1e293b;
+border-radius:10px;
+}
+
+.pipeline-steps{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.step{
+background:#38bdf8;
+color:#020617;
+padding:10px 16px;
+border-radius:20px;
+font-weight:bold;
+font-size:14px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+color:#64748b;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Computer Vision Cheat Sheet</h1>
+<p>Quick reference for common image processing operations (OpenCV)</p>
+</header>
+
+<div class="container">
+
+<h2 class="section-title">Image Preprocessing</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Load Image</h3>
+<p>Read image into memory.</p>
+<div class="code">cv2.imread("image.png")</div>
+</div>
+
+<div class="card">
+<h3>Grayscale</h3>
+<p>Convert RGB image into single intensity channel.</p>
+<div class="code">cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</div>
+</div>
+
+<div class="card">
+<h3>Resize</h3>
+<p>Standardize image size for processing.</p>
+<div class="code">cv2.resize(img, (width,height))</div>
+</div>
+
+<div class="card">
+<h3>ROI</h3>
+<p>Crop only region of interest.</p>
+<div class="code">roi = img[y1:y2, x1:x2]</div>
+</div>
+
+</div>
+
+<h2 class="section-title">Noise Removal</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Gaussian Blur</h3>
+<p>Smooth image and reduce high-frequency noise.</p>
+<div class="code">cv2.GaussianBlur(img,(5,5),0)</div>
+</div>
+
+<div class="card">
+<h3>Median Blur</h3>
+<p>Removes salt-and-pepper noise.</p>
+<div class="code">cv2.medianBlur(img,5)</div>
+</div>
+
+</div>
+
+<h2 class="section-title">Segmentation</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Threshold</h3>
+<p>Convert grayscale image into binary image.</p>
+<div class="code">cv2.threshold(gray,120,255,cv2.THRESH_BINARY)</div>
+</div>
+
+<div class="card">
+<h3>Adaptive Threshold</h3>
+<p>Threshold computed locally for uneven lighting.</p>
+<div class="code">cv2.adaptiveThreshold()</div>
+</div>
+
+<div class="card">
+<h3>Edge Detection</h3>
+<p>Detect boundaries of objects.</p>
+<div class="code">cv2.Canny(gray,50,150)</div>
+</div>
+
+</div>
+
+<h2 class="section-title">Shape Detection</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Contours</h3>
+<p>Extract object boundaries.</p>
+<div class="code">cv2.findContours()</div>
+</div>
+
+<div class="card">
+<h3>Bounding Box</h3>
+<p>Draw rectangle around detected object.</p>
+<div class="code">cv2.boundingRect(cnt)</div>
+</div>
+
+<div class="card">
+<h3>Connected Components</h3>
+<p>Label objects in binary image.</p>
+<div class="code">cv2.connectedComponents()</div>
+</div>
+
+</div>
+
+<h2 class="section-title">Morphological Operations</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Erosion</h3>
+<p>Shrinks white objects. Removes noise.</p>
+<div class="code">cv2.erode()</div>
+</div>
+
+<div class="card">
+<h3>Dilation</h3>
+<p>Expands white regions. Fills gaps.</p>
+<div class="code">cv2.dilate()</div>
+</div>
+
+<div class="card">
+<h3>Opening</h3>
+<p>Erosion → Dilation (remove noise).</p>
+<div class="code">cv2.morphologyEx(img, cv2.MORPH_OPEN)</div>
+</div>
+
+<div class="card">
+<h3>Closing</h3>
+<p>Dilation → Erosion (fill holes).</p>
+<div class="code">cv2.morphologyEx(img, cv2.MORPH_CLOSE)</div>
+</div>
+
+</div>
+
+<div class="pipeline">
+
+<h2>Typical Computer Vision Pipeline</h2>
+
+<div class="pipeline-steps">
+
+<div class="step">Load Image</div>
+<div class="step">Grayscale</div>
+<div class="step">Blur</div>
+<div class="step">Threshold / Edge</div>
+<div class="step">Morphology</div>
+<div class="step">Contours</div>
+<div class="step">Measure / Count</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+Computer Vision Quick Reference • Built for Learning
+</footer>
+
+</body>
+</html>
